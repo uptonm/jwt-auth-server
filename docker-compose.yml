@@ -1,0 +1,23 @@
+version: '3'
+services:
+  app:
+    container_name: express-jwt
+    restart: always
+    build: ./
+    ports:
+      - '8080:8080'
+    volumes:
+      - .:/app
+    links:
+      - jwt_store
+    environment:
+      - DB_URI=mongodb://jwt_store:27017/express-jwt
+      - PORT=8080
+      - JWT_SECRET=QFAqk99kUzxr7WYCrOV2UjVziVBWoOoz4ZGL4T7b13cWd2xTpoTlkjCq8BlDTTmqprGS6bADBYM0EVOf
+    depends_on:
+      - jwt_store
+  jwt_store:
+    container_name: jwt_store
+    image: mongo
+    ports:
+      - '27017:27017'

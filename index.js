@@ -9,7 +9,7 @@ const app = express();
 require('./models/user.model');
 require('dotenv').config();
 
-mongoose.connect('mongodb://localhost:27017/passport-jwt', { useNewUrlParser: true });
+mongoose.connect(process.env.DB_URI, { useNewUrlParser: true });
 mongoose.connection.on('error', error => console.log(error));
 mongoose.Promise = global.Promise;
 
