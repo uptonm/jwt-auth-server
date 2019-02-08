@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const UserSchema = new Schema({
   email: {
@@ -11,14 +11,16 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  first: String,
+  last: String
 });
 
 UserSchema.pre('save', async function(next) {
   const user = this;
   //Hash the password with a salt round of 10, the higher the rounds the more secure, but the slower
   //your application becomes.
-  const hash = await bcrypt.hash(this.password, 10);
+  const hash = await bcrypt.hash(this.password, 1);
   //Replace the plain text password with the hash and then store it
   this.password = hash;
   next();
@@ -33,6 +35,6 @@ UserSchema.methods.isValidPassword = async function(password) {
   return compare;
 };
 
-const UserModel = mongoose.model('user', UserSchema);
+const UserModel = mongoose.model('users', UserSchema);
 
 module.exports = UserModel;
