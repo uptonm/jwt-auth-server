@@ -21,7 +21,7 @@ exports.login = async (req, res, next) => {
         // user password in the token so we pick only the email and id
         const body = { _id: user._id, email: user.email };
         //Sign the JWT token and populate the payload with the user email and id
-        const token = jwt.sign({ user: body }, process.env.JWT_SECRET);
+        const token = jwt.sign({ user: body }, process.env.JWT_SECRET, {expiresIn: "12h"});
         //Send back the token to the user
         return res.json({ token });
       });
