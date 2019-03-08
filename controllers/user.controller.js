@@ -19,7 +19,7 @@ exports.putUser = async (req, res) => {
   if (exists) {
     console.log(req.body);
     await user.findByIdAndUpdate(exists._id, req.body, (error, response) => {
-      if(error) return res.send(error);
+      if (error) return res.send(error);
       return res.send(response);
     });
   } else {
